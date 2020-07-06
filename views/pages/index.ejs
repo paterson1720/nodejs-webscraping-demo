@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body{
+            display:flex; 
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column;
+        }
+
+        .container{
+            max-width: 860px; 
+            margin:0 auto;
+        }
+        
+        .title {
+            color:dodgerblue; 
+            width:100%; 
+            text-align: center;
+        }
+
+        .job-title{
+            font-weight: 600;
+            color:rgb(3, 103, 204);
+        }
+
+        .collapsible-header {
+            display: flex; 
+            align-items: center;
+        }
+
+        div > img {
+            width: 50px; 
+            margin-right: 20px;
+            border-radius: 50%;
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tag-item {
+            background-color: lightgray;
+            padding: 3px;
+            margin-top: 5px;
+            display: inline-block;
+            margin-right: 3px;
+            border-radius: 4px;
+            color: gray;
+        }
+
+        .apply-btn  {
+            display: block;
+            text-decoration: none;
+            color: white;
+            text-transform: uppercase;
+            background-color: dodgerblue;
+            width: 250px;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 900;
+        }
+    </style>
+    <div class="container">
+        <h1 class="title">
+            Remote Jobs
+        </h1>
+        <ul class="collapsible">
+            <% jobs.forEach(function(job) { %>
+                <li>
+                    <div class="collapsible-header">
+                        <div><img src="<%= job.logo %>"></div>
+                        <div class="header-text">
+                            <span class="job-title"><%= job.title %> </span>
+                            <span><%= job.company %> | <%= job.location || "Worldwide" %></span>
+                            <% if(job.tags && job.tags.length) { %>
+                                <div class="tags">
+                                    <% job.tags.slice(0,5).forEach(function(tag) { %>
+                                        <span class="tag-item"> 
+                                            <%= tag %>
+                                        </span>
+                                    <% }); %>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="collapsible-body">
+                        <div> <%- job.description %></div>
+                        <a href="<%= job.url %>" target="_blank" class="apply-btn">
+                            Apply To This Job 
+                        </a>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const elems = document.querySelectorAll('.collapsible');
+        const instances = M.Collapsible.init(elems);
+      });
+    </script>
+</body>
+</html>
